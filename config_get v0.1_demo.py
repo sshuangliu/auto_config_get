@@ -30,7 +30,7 @@ def devices_conn(device, position):
 	cmd_set = wb.sheet_by_name(device['cmd_set']).col_values(0)
 
 	cisco1 = { 
-    "device_type": "cisco_ios" if device['ssh_telnet'] == "ssh" else "cisco_ios_telnet",
+    "device_type": "linux" if device['ssh_telnet'] == "ssh" else "cisco_ios_telnet",
     "host": device['IP'],
     "username": device['Username'],
     "password": device['Password'],

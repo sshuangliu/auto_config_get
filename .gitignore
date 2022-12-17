@@ -1,0 +1,6 @@
+# https://www.cnblogs.com/kevingrace/p/5690241.html
+*.exe
+*.spec
+/build
+/dist
+/20221207203652
