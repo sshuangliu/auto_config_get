@@ -20,7 +20,7 @@ logging.basicConfig(filename=os.path.join(BASE_DIR_configuration, 'running.log')
 logger = logging.getLogger("netmiko")
 
 for file in os.listdir(BASE_DIR):
-	if file == 'input_config_get v0.2.xls':
+	if file == 'input_config_get v0.3.xls':
 		file_name = file
 
 wb = xlrd.open_workbook(filename=file_name)
@@ -35,7 +35,7 @@ for number_rows in range(1, sheet1.nrows):
 	device_infor_all.append(dict(zip(title_rows, value_rows)))
 
 
-WORD_THREAD = 10
+WORD_THREAD = 20
 
 IP_QUEUE = Queue()
 for i in device_infor_all:

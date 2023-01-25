@@ -20,7 +20,7 @@ logging.basicConfig(filename=os.path.join(BASE_DIR_configuration, 'running.log')
 logger = logging.getLogger("netmiko")
 
 for file in os.listdir(BASE_DIR):
-	if file == 'input_config_set v0.2.xls':
+	if file == 'input_config_set v0.3.xls':
 		file_name = file
 
 wb = xlrd.open_workbook(filename=file_name)
@@ -34,13 +34,13 @@ for number_rows in range(1, sheet1.nrows):
 	value_rows = sheet1.row_values(number_rows)
 	device_infor_all.append(dict(zip(title_rows, value_rows)))
 
-WORD_THREAD = 10
+WORD_THREAD = 20
 
 IP_QUEUE = Queue()
 for i in device_infor_all:
 	IP_QUEUE.put(i)
 
-#print(device_infor_all)
+# print(device_infor_all)
 results_txt = []
 results_csv = []
 
@@ -67,11 +67,11 @@ def devices_conn():
 				if device['Enable'] != '':
 					net_connect.enable()
 				r1 = net_connect.find_prompt()
-				output = net_connect.send_command("config t", expect_string=r"config")
+				output = net_connect.send_command("config t", expect_string=r"config", strip_prompt=False, strip_command=False)
 				for command in cmd_set:
-					output += net_connect.send_command(command.strip(), expect_string=r"config")
-				output += net_connect.send_command("end", expect_string=r"#")
-				output += net_connect.send_command("write", expect_string=r"#")
+					output += net_connect.send_command(command.strip(), expect_string=r"config", strip_prompt=False, strip_command=False)
+				output += net_connect.send_command("end", expect_string=r"#", strip_prompt=False, strip_command=False)
+				output += net_connect.send_command("write", expect_string=r"#", strip_prompt=False, strip_command=False)
 				# print(output)
 				with open(os.path.join(device_directory, 'session.txt'), 'wt') as f:
 					f.write(output)
